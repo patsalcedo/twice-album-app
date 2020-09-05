@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import twicelogo from "./twicelogo.svg";
 import "./App.css";
-import albumService from "./albumService";
 import Album from "./Components/Album";
-import Search from "./Components/Search";
+import AlbumTwo from "./Components/AlbumTwo";
+import albums from "./albums.json";
 
 const App = () => {
   const [query, setQuery] = useState("");
@@ -12,7 +12,28 @@ const App = () => {
 
   useEffect(() => {
     getAlbumDetails();
-  }, [query]);
+  }, [query]); // whenever whatever is in [] changes, the useEffect hook will rerun
+
+  const getAlbumDetails = async () => {
+    const response = await fetch("albums.json");
+    const data = await response.json();
+    const queryData = data.filter((item) => item.name === query);
+    // const qDataArr = Object.values(queryData);
+    console.log(queryData);
+    setAlbum(queryData);
+    console.log("album", album);
+
+    // SO THE PROBLEM: it does return the object but it does not setAlbum at the same time
+    // you have to press Search twice to have the album set to the queried album
+    // and it sitll does not display on page.
+
+    // fetch("albums.json")
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    //     console.log(data);
+    //     setAlbum(data);
+    //   });
+  };
 
   const updateSearch = (evt) => {
     setSearch(evt.target.value);
@@ -24,16 +45,20 @@ const App = () => {
     setSearch("");
   };
 
-  const getAlbumDetails = () => {
-    albumService().then((result) => {
-      setAlbum(result);
-      // console.log(result.hits);
-    });
-  };
-
   return (
     <div className="App">
-      <Search search={search} />
+      <form onSubmit={getSearch} className="search-form">
+        <input
+          className="search-bar"
+          type="text"
+          placeholder="Search for a TWICE album..."
+          value={search}
+          onChange={updateSearch}
+        />
+        <button className="search-button" type="submit">
+          Search
+        </button>
+      </form>
       <header className="App-header">
         <img src={twicelogo} className="App-logo" alt="logo" />
         <p>TWICE Album App</p>
@@ -46,23 +71,17 @@ const App = () => {
           Stream MORE & MORE
         </a>
       </header>
-      <div className="album">
-        {album.map((album) => (
-          <Album
-            key={album.album.albumkey}
-            name={album.album.name}
-            type={album.album.type}
-            release_date={album.album.release_date}
-            title_track={album.album.title_track}
-            tracklist={album.album.tracklist}
-            image={album.album.image}
-          />
-        ))}
-      </div>
+      {album.map((album) => (
+        <AlbumTwo
+          key={album.albumkey}
+          nameAlbum={album.name}
+          releasedate={album.release_date}
+          titletrack={album.title_track}
+        />
+      ))}
       <p className="names">
         NAYEON | JEONGYEON | MOMO | SANA | JIHYO
         <br />
-        <t />
         MINA | DAHYUN | CHAEYOUNG | TZUYU
       </p>
     </div>

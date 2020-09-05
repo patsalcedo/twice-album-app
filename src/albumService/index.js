@@ -14,8 +14,8 @@ const albums = [
       "Dont Call Me Again",
       "Sweet Summer Day",
     ],
-    image:
-      "https://vignette.wikia.nocookie.net/kpop/images/8/88/TWICE_More_%26_More_digital_album_cover.png/revision/latest?cb=20200602194129",
+    // image:
+    // "https://vignette.wikia.nocookie.net/kpop/images/8/88/TWICE_More_%26_More_digital_album_cover.png/revision/latest?cb=20200602194129",
   },
   {
     albumkey: "190923",
@@ -246,3 +246,5 @@ const albums = [
     ],
   },
 ];
+
+export default albums;

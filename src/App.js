@@ -64,11 +64,11 @@ const App = () => {
         <p>TWICE Album App</p>
         <a
           className="App-link"
-          href="https://youtu.be/mH0_XpSHkZo"
+          href="https://youtu.be/CM4CkVFmTds"
           target="_blank"
           rel="noopener noreferrer"
         >
-          Stream MORE & MORE
+          Stream I CAN'T STOP ME
         </a>
       </header>
       {album.map((album) => (
